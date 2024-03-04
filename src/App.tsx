@@ -2,6 +2,7 @@ import React from 'react';
 import Income from './components/Income'
 import Expense from './components/Expense';
 import Saving from './components/Saving';
+import Balance from './components/Balance';
 
 
 
@@ -11,9 +12,14 @@ function App() {
     <div className="App">
       <Income />
       <br />
+
       <Expense />
       <br />
+
       <Saving />
+      <br />
+
+      <Balance />
     </div>
   );
 }
