@@ -1,4 +1,3 @@
-
 const Expense = () => {
   return (
     <section>
@@ -11,6 +10,7 @@ const Expense = () => {
       <br />
       <input type="number" />
 
+      <br />
       <label>Date of expense</label>
       <br />
       <input type="Date" />
