@@ -1,21 +1,92 @@
+import React, { ChangeEvent, FormEvent, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+
+type ExpenseType = {
+  id: string;
+  source: number;
+  amount: number;
+  date: string;
+};
+
 const Expense = () => {
+  const [expenseArr, setExpenseArr] = useState<ExpenseType[]>([]);
+  const [expense, setExpense] = useState({
+    source: "",
+    amount: 0,
+    date: "",
+  });
+
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    console.log(expense);
+    const newExpense = {
+      id: uuidv4(),
+      source: expense.source,
+      amount: expense.amount,
+      date: expense.date,
+    };
+
+    setExpenseArr((prevIncomes) => {
+      return [...prevIncomes, newExpense];
+    });
+
+    // reset input feild
+    setExpense({
+      source: "",
+      amount: 0,
+      date: "",
+    });
+  };
+
+  console.log("test");
+  //////////////////////////////////////////////////////////////////////
+  const handleExpense = (event: ChangeEvent<HTMLInputElement>) => {
+    setExpense((prevIncome) => {
+      return { ...prevIncome, [event.target.name]: event.target.value };
+    });
+  };
+
   return (
     <section>
-      <label>Expense source</label>
-      <br />
-      <input type="text" placeholder="Expense" />
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="source">Expense source</label>
+        <input
+          type="text"
+          name="source"
+          placeholder="Expense"
+          value={expense.source}
+          onChange={handleExpense}
+        />
 
-      <br />
-      <label>Amount of expense</label>
-      <br />
-      <input type="number" />
+        <label>Amount of expense</label>
+        <input
+          type="number"
+          name="amount"
+          value={Number(expense.amount)}
+          onChange={handleExpense}
+        />
 
-      <br />
-      <label>Date of expense</label>
-      <br />
-      <input type="Date" />
-      <br />
-      <button>Add expense</button>
+        <label>Date of expense</label>
+        <input
+          type="Date"
+          name="date"
+          value={expense.date}
+          onChange={handleExpense}
+        />
+        <button>Add expense</button>
+      </form>
+
+      <div>
+        <ul>
+          {expenseArr.map((newExpense) => {
+            return (
+              <li key={newExpense.id}>
+                {newExpense.source}: {newExpense.amount}EUR on {newExpense.date}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </section>
   );
 };
