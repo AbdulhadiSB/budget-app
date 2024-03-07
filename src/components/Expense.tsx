@@ -38,7 +38,6 @@ const Expense = () => {
     });
   };
 
-  console.log("test");
   //////////////////////////////////////////////////////////////////////
   const handleExpense = (event: ChangeEvent<HTMLInputElement>) => {
     setExpense((prevIncome) => {

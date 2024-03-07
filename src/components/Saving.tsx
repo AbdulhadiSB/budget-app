@@ -1,26 +1,45 @@
+import React, { ChangeEvent, FormEvent, useState } from "react";
+
 const Saving = () => {
+  const [target, setTarget] = useState(0);
+
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    setTarget(Number(0));
+  };
+
+  const handleTarget = (event: ChangeEvent<HTMLInputElement>) => {
+    console.log("target is working");
+    setTarget(Number(event.target.value));
+  };
+
+  // const handleRest = () => {
+
+  // }
+
   return (
     <section>
-      <label>Set target</label>
-      <br />
-      <input type="number" />
-      <br />
-      <button>Reset</button>
-      <br />
+      <form onSubmit={handleSubmit}>
+        <label>Set target</label>
+        <input
+          type="number"
+          name="targetSaving"
+          onChange={handleTarget}
+          value={target}
+        />
+        <button>Reset</button>
 
-      <label>Current saving: </label>
-      <span>0</span>
-      <br />
+        <label>Current saving: </label>
+        <span>0</span>
 
-      <label>Target: </label>
-      <span>0</span>
-      <br />
+        <label>Target: </label>
+        <span>{target}</span>
 
-      <label>Progress: </label>
-      <progress value="00" max="100">
-        {" "}
-        {" "}
-      </progress>
+        <label>Progress: </label>
+        <progress value="00" max="100">
+          {" "}
+        </progress>
+      </form>
     </section>
   );
 };

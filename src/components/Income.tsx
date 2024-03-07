@@ -56,6 +56,7 @@ const Income = () => {
           // the value reset the feild
           value={income.source}
           onChange={handleIncome}
+          required
         />
 
         <label>Amount of income</label>
@@ -64,6 +65,7 @@ const Income = () => {
           name="amount"
           value={Number(income.amount)}
           onChange={handleIncome}
+          required
         />
 
         <label>Date of income</label>
@@ -72,6 +74,7 @@ const Income = () => {
           name="date"
           value={income.date}
           onChange={handleIncome}
+          required
         />
 
         <button>Add income</button>
