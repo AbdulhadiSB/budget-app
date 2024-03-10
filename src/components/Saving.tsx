@@ -1,6 +1,10 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 
-const Saving = () => {
+type SavingProps = {
+  transferAmount: number;
+}
+
+const Saving = ({transferAmount}: SavingProps) => {
   const [target, setTarget] = useState(0);
 
   const handleSubmit = (event: FormEvent) => {
@@ -29,7 +33,7 @@ const Saving = () => {
         <button>Reset</button>
 
         <label>Current saving: </label>
-        <span>0</span>
+        <span>{transferAmount}</span>
 
         <label>Target: </label>
         <span>{target}</span>
