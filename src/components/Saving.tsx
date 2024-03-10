@@ -13,9 +13,8 @@ const Saving = () => {
     setTarget(Number(event.target.value));
   };
 
-  // const handleRest = () => {
-
-  // }
+  // Progress still to be done 
+  
 
   return (
     <section>

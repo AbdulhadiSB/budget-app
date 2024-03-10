@@ -16,6 +16,7 @@ const Income = () => {
     date: "",
   });
 
+
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     console.log(income);
@@ -25,6 +26,8 @@ const Income = () => {
       amount: income.amount,
       date: income.date,
     };
+
+    console.log("Newly generated ID:", newIncome.id);
 
     setIncomeArr((prevIncomes) => {
       return [...prevIncomes, newIncome];
@@ -44,6 +47,12 @@ const Income = () => {
       return { ...prevIncome, [event.target.name]: event.target.value };
     });
   };
+
+  const handleDelete = (id: string ) => {
+    const filteredIncome = incomeArr.filter((income) => income.id !== id);
+    setIncomeArr(filteredIncome);
+
+  }
 
   return (
     <section>
@@ -84,9 +93,12 @@ const Income = () => {
         <ul>
           {incomeArr.map((newIncome) => {
             return (
-              <li key={newIncome.id}>
-                {newIncome.source}: {newIncome.amount}EUR on {newIncome.date}
-              </li>
+              <div>
+                <li key={newIncome.id}>
+                  {newIncome.source}: {newIncome.amount}EUR on {newIncome.date}
+                </li>
+                <button onClick={() => handleDelete (newIncome.id)}>delete</button>
+              </div>
             );
           })}
         </ul>

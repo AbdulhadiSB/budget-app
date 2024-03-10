@@ -1,4 +1,5 @@
 import React from 'react';
+import '../public/app.css'
 import Income from './components/Income'
 import Expense from './components/Expense';
 import Saving from './components/Saving';

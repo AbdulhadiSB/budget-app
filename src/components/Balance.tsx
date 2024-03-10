@@ -1,4 +1,16 @@
+import React, { ChangeEvent, FormEvent, useState } from "react";
+
+
 const Balance = () => {
+  
+
+
+
+
+
+
+
+
   return (
     <section>
       <label>Current balance: </label>

@@ -45,6 +45,11 @@ const Expense = () => {
     });
   };
 
+  const handleDelete = (id: string) => {
+    const filteredExpense = expenseArr.filter((expense) => expense.id !== id);
+    setExpenseArr(filteredExpense);
+  };
+
   return (
     <section>
       <form onSubmit={handleSubmit}>
@@ -76,15 +81,21 @@ const Expense = () => {
       </form>
 
       <div>
-        <ul>
-          {expenseArr.map((newExpense) => {
-            return (
-              <li key={newExpense.id}>
-                {newExpense.source}: {newExpense.amount}EUR on {newExpense.date}
-              </li>
-            );
-          })}
-        </ul>
+          <ul>
+            {expenseArr.map((newExpense) => {
+              return (
+                <div>
+                  <li key={newExpense.id}>
+                    {newExpense.source}: {newExpense.amount}EUR on{" "}
+                    {newExpense.date}
+                  </li>
+                  <button onClick={() => handleDelete(newExpense.id)}>
+                    delete
+                  </button>
+                </div>
+              );
+            })}
+          </ul>
       </div>
     </section>
   );
