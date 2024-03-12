@@ -1,11 +1,16 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
 
 type SavingProps = {
   transferAmount: number;
-}
+};
 
-const Saving = ({transferAmount}: SavingProps) => {
+const Saving = (props: { savingAmount: number }) => {
   const [target, setTarget] = useState(0);
+  const [saving, setSavings] = useState(0);
+
+  useEffect(() => {
+    setSavings(saving + props.savingAmount);
+  }, [props.savingAmount]);
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -17,8 +22,7 @@ const Saving = ({transferAmount}: SavingProps) => {
     setTarget(Number(event.target.value));
   };
 
-  // Progress still to be done 
-  
+  // Progress still to be done
 
   return (
     <section>
@@ -33,13 +37,13 @@ const Saving = ({transferAmount}: SavingProps) => {
         <button>Reset</button>
 
         <label>Current saving: </label>
-        <span>{transferAmount}</span>
+        <span>{props.savingAmount}</span>
 
         <label>Target: </label>
         <span>{target}</span>
 
         <label>Progress: </label>
-        <progress value="00" max="100">
+        <progress value="0" max={target}>
           {" "}
         </progress>
       </form>

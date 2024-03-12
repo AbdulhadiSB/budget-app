@@ -1,20 +1,31 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 type ExpenseType = {
   id: string;
-  source: number;
+  source: string;
   amount: number;
   date: string;
 };
 
-const Expense = () => {
+type GetExpense = {
+  setTotalExpenseAmount: (totalExpenseAmount: number) => void;
+};
+
+
+const Expense = (props: GetExpense) => {
   const [expenseArr, setExpenseArr] = useState<ExpenseType[]>([]);
   const [expense, setExpense] = useState({
     source: "",
     amount: 0,
     date: "",
   });
+
+  useEffect(() => {
+    props.setTotalExpenseAmount(
+      expenseArr.reduce((total, expense) => total + expense.amount, 0)
+    );
+  }, [expenseArr]);
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -29,6 +40,7 @@ const Expense = () => {
     setExpenseArr((prevIncomes) => {
       return [...prevIncomes, newExpense];
     });
+
 
     // reset input feild
     setExpense({
@@ -81,21 +93,21 @@ const Expense = () => {
       </form>
 
       <div>
-          <ul>
-            {expenseArr.map((newExpense) => {
-              return (
-                <div>
-                  <li key={newExpense.id}>
-                    {newExpense.source}: {newExpense.amount}EUR on{" "}
-                    {newExpense.date}
-                  </li>
-                  <button onClick={() => handleDelete(newExpense.id)}>
-                    delete
-                  </button>
-                </div>
-              );
-            })}
-          </ul>
+        <ul>
+          {expenseArr.map((newExpense) => {
+            return (
+              <div>
+                <li key={newExpense.id}>
+                  {newExpense.source}: {newExpense.amount}EUR on{" "}
+                  {newExpense.date}
+                </li>
+                <button onClick={() => handleDelete(newExpense.id)}>
+                  delete
+                </button>
+              </div>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );

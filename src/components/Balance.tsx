@@ -1,56 +1,41 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-type TransferType = {
-  id: string;
-  transferAmount: number;
+// type TransferType = {
+//   id: string;
+//   transferAmount: number;
+// };
+
+type BalanceAndTransfer = {
+  balance: number;
+  transferSaving: (amount: number) => void;
 };
 
-type BalanceProps = {
-  onTransferAmountChange: (amount: number) => void;
-};
+const Balance = (props: BalanceAndTransfer) => {
+  // const [savingArray, setSavingArray] = useState<TransferType[]>([]);
+  const [savingAmount, setSavingAmount] = useState(0);
 
-const Balance = ({onTransferAmountChange}: BalanceProps) => {
-  const [transferArr, setTransferArr] = useState<TransferType[]>([]);
-  const [transfer, setTransfer] = useState({
-    id: "",
-    transferAmount: 0,
-  });
-
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    const newTransfer = {
-      id: uuidv4(),
-      transferAmount: transfer.transferAmount,
-    };
-
-    console.log(newTransfer);
-
-    setTransferArr((prevTransfer) => {
-      return [...prevTransfer, newTransfer];
-    });
-
-    onTransferAmountChange(transfer.transferAmount);
+  const handleTransferSaving = (event: ChangeEvent<HTMLInputElement>) => {
+    setSavingAmount(Number(event.target.value));
   };
 
-  const handleTransfer = (event: ChangeEvent<HTMLInputElement>) => {
-    setTransfer((prevTransfer) => {
-      return { ...prevTransfer, [event.target.name]: event.target.value };
-    });
+  const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+    props.transferSaving(savingAmount);
   };
 
   return (
     <section>
       <label>Current balance: </label>
-      <span>0</span>
+      <span>{props.balance}</span>
 
       <form onSubmit={handleSubmit}>
         <label>Transfer to saving account</label>
         <input
           type="number"
           name="transferAmount"
-          value={transfer.transferAmount}
-          onChange={handleTransfer}
+          value={savingAmount}
+          onChange={handleTransferSaving}
         />
         <button>Transfer</button>
       </form>

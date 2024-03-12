@@ -1,42 +1,43 @@
-import React, { useState } from 'react';
-import '../public/app.css'
-import Income from './components/Income'
-import Expense from './components/Expense';
-import Saving from './components/Saving';
-import Balance from './components/Balance';
-
-
-
+import React, { useState } from "react";
+import "../public/app.css";
+import Income from "./components/Income";
+import Expense from "./components/Expense";
+import Saving from "./components/Saving";
+import Balance from "./components/Balance";
 
 function App() {
+  const [totalIncomeAmount, setTotalIncomeAmount] = useState(0);
+  const [totalExpenseAmount, setTotalExpenseAmount] = useState(0);
+  const [totalSavingAmount, setTotalSavingAmount] = useState(0);
 
-  const [transferAmount, setTransferAmount] = useState<number>(0);
+  const getTotalIncomeAmount = (totalIncomeAmount: number) => {
+    setTotalIncomeAmount(totalIncomeAmount);
+  };
 
-  const handleTransferAmountChange = (amount: number) => {
-    setTransferAmount(amount)
+  const getTotalExpenseAmount = (totalExpenseAmount: number) => {
+    setTotalExpenseAmount(totalExpenseAmount);
+  };
 
-  }
+  const getTransferAmount = (totalSavingAmount: number) => {
+    setTotalSavingAmount(totalSavingAmount);
+  };
 
-
-
-
-
-
+    const totalBalance = () => {
+      return totalIncomeAmount - totalExpenseAmount - totalSavingAmount;
+    };
 
   return (
     <div className="App">
-      <Income />
+      <Income setTotalIncomeAmount={getTotalIncomeAmount} />
       <br />
-
-      <Expense />
+      <Expense setTotalExpenseAmount={getTotalExpenseAmount} />
       <br />
-
-      <Saving transferAmount={transferAmount} />
+      <Saving savingAmount={totalSavingAmount} />
       <br />
-
-      <Balance onTransferAmountChange={handleTransferAmountChange} />
+      <Balance balance={totalBalance()} transferSaving={getTransferAmount} />
     </div>
   );
 }
+
 
 export default App;

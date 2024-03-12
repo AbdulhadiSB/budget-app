@@ -1,14 +1,16 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 type IncomeType = {
   id: string;
-  source: number;
+  source: string;
   amount: number;
   date: string;
 };
 
-const Income = () => {
+type GetIncome = { setTotalIncomeAmount: (totalIncomeAmount: number) => void };
+
+const Income = (props: GetIncome) => {
   const [incomeArr, setIncomeArr] = useState<IncomeType[]>([]);
   const [income, setIncome] = useState({
     source: "",
@@ -16,6 +18,18 @@ const Income = () => {
     date: "",
   });
 
+  useEffect(() => {
+    props.setTotalIncomeAmount(
+      incomeArr.reduce((total, income) => total + income.amount, 0)
+    );
+  }, [incomeArr]);
+
+  const handleIncome = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    setIncome((prevIncome) => {
+      return { ...prevIncome, [event.target.name]: event.target.value };
+    });
+  };
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -23,15 +37,21 @@ const Income = () => {
     const newIncome = {
       id: uuidv4(),
       source: income.source,
-      amount: income.amount,
+      amount: Number(income.amount),
       date: income.date,
     };
 
-    console.log("Newly generated ID:", newIncome.id);
+    // onIncomeAmountChange(income.amount);
 
     setIncomeArr((prevIncomes) => {
       return [...prevIncomes, newIncome];
     });
+
+    // const totalIncomeAmount = incomeArr.reduce(
+    //   (total, currentValue) => total + currentValue.amount,
+    //   0
+    // );
+    // props.onGetTotalIncomeAmount(totalIncomeAmount);
 
     // reset input feild
     setIncome({
@@ -42,17 +62,11 @@ const Income = () => {
   };
 
   //////////////////////////////////////////////////////////////////////
-  const handleIncome = (event: ChangeEvent<HTMLInputElement>) => {
-    setIncome((prevIncome) => {
-      return { ...prevIncome, [event.target.name]: event.target.value };
-    });
-  };
 
-  const handleDelete = (id: string ) => {
+  const handleDelete = (id: string) => {
     const filteredIncome = incomeArr.filter((income) => income.id !== id);
     setIncomeArr(filteredIncome);
-
-  }
+  };
 
   return (
     <section>
@@ -97,7 +111,9 @@ const Income = () => {
                 <li key={newIncome.id}>
                   {newIncome.source}: {newIncome.amount}EUR on {newIncome.date}
                 </li>
-                <button onClick={() => handleDelete (newIncome.id)}>delete</button>
+                <button onClick={() => handleDelete(newIncome.id)}>
+                  delete
+                </button>
               </div>
             );
           })}
