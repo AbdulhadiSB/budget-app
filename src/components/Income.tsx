@@ -41,17 +41,9 @@ const Income = (props: GetIncome) => {
       date: income.date,
     };
 
-    // onIncomeAmountChange(income.amount);
-
     setIncomeArr((prevIncomes) => {
       return [...prevIncomes, newIncome];
     });
-
-    // const totalIncomeAmount = incomeArr.reduce(
-    //   (total, currentValue) => total + currentValue.amount,
-    //   0
-    // );
-    // props.onGetTotalIncomeAmount(totalIncomeAmount);
 
     // reset input feild
     setIncome({
@@ -69,45 +61,47 @@ const Income = (props: GetIncome) => {
   };
 
   return (
-    <section>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="source">Income source</label>
-        <input
-          type="text"
-          name="source"
-          placeholder="Enter Source of Income"
-          // the value reset the feild
-          value={income.source}
-          onChange={handleIncome}
-          required
-        />
+    <div>
+      <section className="app_item income">
+        <form className="form-income" onSubmit={handleSubmit}>
+          <label htmlFor="source">Income source</label>
+          <input
+            type="text"
+            name="source"
+            placeholder="Enter Source of Income"
+            // the value reset the feild
+            value={income.source}
+            onChange={handleIncome}
+            required
+          />
 
-        <label>Amount of income</label>
-        <input
-          type="number"
-          name="amount"
-          value={Number(income.amount)}
-          onChange={handleIncome}
-          required
-        />
+          <label>Amount of income</label>
+          <input
+            type="number"
+            name="amount"
+            value={Number(income.amount)}
+            onChange={handleIncome}
+            required
+          />
 
-        <label>Date of income</label>
-        <input
-          type="Date"
-          name="date"
-          value={income.date}
-          onChange={handleIncome}
-          required
-        />
+          <label>Date of income</label>
+          <input
+            type="Date"
+            name="date"
+            value={income.date}
+            onChange={handleIncome}
+            required
+          />
 
-        <button>Add income</button>
-      </form>
-
-      <div>
+          <button>Add income</button>
+        </form>
+      </section>
+      
+      <div className="income-item">
         <ul>
           {incomeArr.map((newIncome) => {
             return (
-              <div>
+              <div className="income-list">
                 <li key={newIncome.id}>
                   {newIncome.source}: {newIncome.amount}EUR on {newIncome.date}
                 </li>
@@ -119,7 +113,7 @@ const Income = (props: GetIncome) => {
           })}
         </ul>
       </div>
-    </section>
+    </div>
   );
 };
 

@@ -1,10 +1,200 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 5rem;
+}
+
+/* -----------------------------------------  */
+
 .app {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  flex-direction: column;
 }
 
 section {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+}
+
+/* -----------------------------------------  */
+
+.app .income {
+  padding: 2rem;
+}
+
+.app .expense {
+  padding: 2rem;
+}
+
+.app .saving {
+  padding: 2rem;
+}
+
+.app .balance {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+/* -------------------------------------------  */
+
+.income form {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.expense form {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.saving form {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.balance form {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+/* ------------------------------------------------  */
+
+/* ============= INCOME =======================  */
+
+.income input {
+  background-color: rgba(0, 162, 255, 0.4);
+}
+
+.form-income button {
+  background-color: rgba(0, 162, 255, 0.4);
+}
+
+.income label {
+  text-align: left;
+}
+
+/* ==============================================  */
+
+
+/* ----------------------- INCOME ITEMS --------------------------  */
+
+.income-item {
+  /* width: 450px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* padding: 15px; */
+}
+
+.income-item .income-list {
+  display: flex;
+  margin: 10px 0;
+}
+
+.income-item button {
+  margin-left: 15px;
+}
+
+
+.income-item li {
+  list-style-type: none;
+}
+
+/* -----------------------------------------  */
+
+/* ================= EXPENSE ===================  */
+
+.expense input {
+  background-color: rgba(255, 0, 0, 0.4);
+}
+
+.form-expense button {
+  background-color: rgba(255, 0, 0, 0.4);
+}
+
+.expense label {
+  text-align: left;
+}
+
+.expense-item {
+  /* width: 450px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* padding: 15px; */
+}
+
+.expense-item .expense-list {
+  display: flex;
+  margin: 10px 0;
+}
+
+.expense-item button {
+  margin-left: 15px;
+}
+
+.expense-item li {
+  list-style-type: none;
+}
+
+/* ------------------------------------------  */
+
+/* ================== SAVING =====================  */
+
+.saving input {
+  background-color: rgba(0, 0, 255, 0.4);
+}
+
+.form-saving button {
+  background-color: rgba(0, 0, 255, 0.4);
+}
+
+/* ----------------------------------------------------  */
+
+/* ===================== BALANCE =======================  */
+
+.balance input {
+  background-color: rgba(0, 255, 0, 0.4);
+}
+
+.form-balance button {
+  background-color: rgba(0, 255, 0, 0.4);
+}
+
+/* ------------------------------------------  */
+
+
+
+input {
+  padding: 10px;
+  border: none;
+  border-radius: 5rem;
+}
+
+form button {
+  border: none;
+  border-radius: 5rem;
+  padding: 10px;
+  margin: 10px 0;
+  /* color: aliceblue; */
+  font-size: 15px;
+  font-weight: bold;
+}
+
+label {
+  font-size: 20px;
+  margin: 10px 0;
+  text-align: center;
 }

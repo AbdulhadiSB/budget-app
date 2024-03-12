@@ -12,7 +12,6 @@ type GetExpense = {
   setTotalExpenseAmount: (totalExpenseAmount: number) => void;
 };
 
-
 const Expense = (props: GetExpense) => {
   const [expenseArr, setExpenseArr] = useState<ExpenseType[]>([]);
   const [expense, setExpense] = useState({
@@ -41,7 +40,6 @@ const Expense = (props: GetExpense) => {
       return [...prevIncomes, newExpense];
     });
 
-
     // reset input feild
     setExpense({
       source: "",
@@ -63,40 +61,42 @@ const Expense = (props: GetExpense) => {
   };
 
   return (
-    <section>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="source">Expense source</label>
-        <input
-          type="text"
-          name="source"
-          placeholder="Expense"
-          value={expense.source}
-          onChange={handleExpense}
-        />
+    <div>
+      <section className="app_item expense">
+        <form className="form-expense" onSubmit={handleSubmit}>
+          <label htmlFor="source">Expense source</label>
+          <input
+            type="text"
+            name="source"
+            placeholder="Expense"
+            value={expense.source}
+            onChange={handleExpense}
+          />
 
-        <label>Amount of expense</label>
-        <input
-          type="number"
-          name="amount"
-          value={Number(expense.amount)}
-          onChange={handleExpense}
-        />
+          <label>Amount of expense</label>
+          <input
+            type="number"
+            name="amount"
+            value={Number(expense.amount)}
+            onChange={handleExpense}
+          />
 
-        <label>Date of expense</label>
-        <input
-          type="Date"
-          name="date"
-          value={expense.date}
-          onChange={handleExpense}
-        />
-        <button>Add expense</button>
-      </form>
-
-      <div>
+          <label>Date of expense</label>
+          <input
+            type="Date"
+            name="date"
+            value={expense.date}
+            onChange={handleExpense}
+          />
+          <button>Add expense</button>
+        </form>
+      </section>
+      
+      <div className="expense-item">
         <ul>
           {expenseArr.map((newExpense) => {
             return (
-              <div>
+              <div className="expense-list">
                 <li key={newExpense.id}>
                   {newExpense.source}: {newExpense.amount}EUR on{" "}
                   {newExpense.date}
@@ -109,7 +109,7 @@ const Expense = (props: GetExpense) => {
           })}
         </ul>
       </div>
-    </section>
+    </div>
   );
 };
 

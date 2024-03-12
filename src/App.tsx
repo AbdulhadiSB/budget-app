@@ -29,11 +29,8 @@ function App() {
   return (
     <div className="App">
       <Income setTotalIncomeAmount={getTotalIncomeAmount} />
-      <br />
       <Expense setTotalExpenseAmount={getTotalExpenseAmount} />
-      <br />
       <Saving savingAmount={totalSavingAmount} />
-      <br />
       <Balance balance={totalBalance()} transferSaving={getTransferAmount} />
     </div>
   );

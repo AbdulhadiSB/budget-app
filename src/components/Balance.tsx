@@ -22,14 +22,14 @@ const Balance = (props: BalanceAndTransfer) => {
   const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     props.transferSaving(savingAmount);
+    setSavingAmount(0);
   };
 
   return (
-    <section>
-      <label>Current balance: </label>
-      <span>{props.balance}</span>
+    <section className="app_item balance">
+      <label>Current balance: {props.balance}</label>
 
-      <form onSubmit={handleSubmit}>
+      <form className="form-balance" onSubmit={handleSubmit}>
         <label>Transfer to saving account</label>
         <input
           type="number"
