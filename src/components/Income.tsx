@@ -1,17 +1,34 @@
-import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod"
 
-type IncomeType = {
-  id: string;
-  source: string;
-  amount: number;
-  date: string;
-};
+// type IncomeType = {
+//   id: string;
+//   source: string;
+//   amount: number;
+//   date: string;
+// };
 
 type GetIncome = {
   setTotalIncomeAmount: (totalIncomeAmount: number) => void;
 };
+
+const incomeSchema = z.object({
+  id: z.string().optional(),
+  source: z
+    .string()
+    .min(2, { message: "source must have at least 2 characters " }),
+  amount: z.coerce
+    .number()
+    .positive({ message: "amount must be a positive number" }),
+  date: z.coerce.date({
+    required_error: "Please select a date and time",
+  }),
+});
+
+type IncomeZod = z.infer<typeof incomeSchema>;
 
 const Income = (props: GetIncome) => {
   const {
@@ -19,11 +36,9 @@ const Income = (props: GetIncome) => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<IncomeType>(); 
+  } = useForm<IncomeZod>({ resolver: zodResolver(incomeSchema) });
 
-  const [incomeArr, setIncomeArr] = useState<IncomeType[]>([]);
-
-  // ???????????????????? 
+  const [incomeArr, setIncomeArr] = useState<IncomeZod[]>([]);
 
   useEffect(() => {
     props.setTotalIncomeAmount(
@@ -31,18 +46,14 @@ const Income = (props: GetIncome) => {
     );
   }, [incomeArr]);
 
-  const onSubmit: SubmitHandler<IncomeType> = (data: any) => {
-    const newIncome = {
-      id: uuidv4(),
-      ...data,
-      amount: parseFloat(data.amount),
-    };
-
-    setIncomeArr((prevIncomes) => [...prevIncomes, newIncome]);
+  const onSubmit: SubmitHandler<IncomeZod> = (data: IncomeZod) => {
+      data.id = uuidv4();
+      setIncomeArr((incomeArr) => [...incomeArr, data])
+    // setIncomeArr((prevIncomes) => [...prevIncomes, newIncome]);
     reset();
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = (id: string | undefined) => {
     const filteredIncome = incomeArr.filter((income) => income.id !== id);
     setIncomeArr(filteredIncome);
   };
@@ -55,11 +66,11 @@ const Income = (props: GetIncome) => {
           <input
             type="text"
             placeholder="Enter the source of income"
-            {...register("source", {
-              required: "Enter the source of income",
-            })}
+            {...register("source")}
+            name="source"
+            id="income-source"
           />
-          {errors.source && <span>{errors.source.message}</span>}
+          {errors.source && <p> {errors.source.message}</p>}
 
           <label>Amount of income</label>
           <input
@@ -89,7 +100,8 @@ const Income = (props: GetIncome) => {
           {incomeArr.map((newIncome) => (
             <div className="income-list" key={newIncome.id}>
               <li>
-                {newIncome.source}: {newIncome.amount}EUR on {newIncome.date}
+                {newIncome.source}: {newIncome.amount} EUR on{" "}
+                {newIncome.date.toDateString()}
               </li>
               <button onClick={() => handleDelete(newIncome.id)}>delete</button>
             </div>

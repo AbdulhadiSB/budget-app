@@ -226,5 +226,13 @@ label {
 span {
   margin: 10px;
   color: red;
+  text-align: center;
+  font-size: 18px;
+}
+
+p {
+  margin: 10px;
+  color: red;
+  text-align: center;
   font-size: 18px;
 }
