@@ -26,20 +26,22 @@ const Balance = (props: BalanceAndTransfer) => {
   };
 
   return (
-    <section className="app_item balance">
-      <label>Current balance: {props.balance}</label>
+    <div>
+      <section className="app_item balance">
+        <form className="form-balance" onSubmit={handleSubmit}>
+          <label>Transfer to saving account</label>
+          <input
+            type="number"
+            name="transferAmount"
+            value={savingAmount}
+            onChange={handleTransferSaving}
+          />
+          <button>Transfer</button>
+        </form>
 
-      <form className="form-balance" onSubmit={handleSubmit}>
-        <label>Transfer to saving account</label>
-        <input
-          type="number"
-          name="transferAmount"
-          value={savingAmount}
-          onChange={handleTransferSaving}
-        />
-        <button>Transfer</button>
-      </form>
-    </section>
+        <h2>Current balance: {props.balance}</h2>
+      </section>
+    </div>
   );
 };
 

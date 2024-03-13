@@ -37,27 +37,29 @@ const Saving = (props: { savingAmount: number }) => {
   // Progress still to be done
 
   return (
-    <section className="app_item saving">
-      <form className="form-saving" onSubmit={handleSubmit}>
-        <label>Set target</label>
-        <input
-          type="number"
-          name="targetSaving"
-          onChange={handleTarget}
-          value={target}
-        />
-        <button>Reset</button>
+    <div>
+      <section className="app_item saving">
+        <form className="form-saving" onSubmit={handleSubmit}>
+          <label>Set target</label>
+          <input
+            type="number"
+            name="targetSaving"
+            onChange={handleTarget}
+            value={target}
+          />
+          <button>Reset</button>
 
-        <label>Current saving: {props.savingAmount}</label>
+          <label>Current saving: {props.savingAmount}</label>
 
-        <label>Target: {target}</label>
+          <label>Target: {target}</label>
 
-        <label>Progress: {target > 0 ? percentageCalculating() : 0 } %</label>
-        <progress value={props.savingAmount} max={target}>
-          {" "}
-        </progress>
-      </form>
-    </section>
+          <label>Progress: {target > 0 ? percentageCalculating() : 0} %</label>
+          <progress value={props.savingAmount} max={target}>
+            {" "}
+          </progress>
+        </form>
+      </section>
+    </div>
   );
 };
 
