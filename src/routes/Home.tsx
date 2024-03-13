@@ -3,9 +3,9 @@ import { useNavigate } from "react-router";
 
 const Home = () => {
   const navigate = useNavigate();
-  () => navigate("/budget-app");
+  () => navigate("/Budget-app");
 
-  return <button onClick={() => navigate("/budget-app")}> Home </button>;
+  return <button onClick={() => navigate("/Budget-app")}> Home </button>;
 };
 
 export default Home;

@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import BudgetApp from "./routes/Budget-app";
 import Home from "./routes/Home";
 
-
 function App() {
   return (
     <BrowserRouter>
@@ -14,3 +13,5 @@ function App() {
     </BrowserRouter>
   );
 }
+
+export default App;
