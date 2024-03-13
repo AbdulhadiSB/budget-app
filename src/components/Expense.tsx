@@ -114,7 +114,7 @@ const Expense = (props: GetExpense) => {
       <div className="expense-item">
         <ul>
           {expenseArr.map((newExpense) => (
-            <div className="income-list" key={newExpense.id}>
+            <div className="expense-list" key={newExpense.id}>
               <li>
                 {newExpense.source}: {newExpense.amount}EUR on {newExpense.date}
               </li>

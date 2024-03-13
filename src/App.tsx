@@ -1,40 +1,16 @@
-import React, { useState } from "react";
-import "../public/app.css";
-import Income from "./components/Income";
-import Expense from "./components/Expense";
-import Saving from "./components/Saving";
-import Balance from "./components/Balance";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import BudgetApp from "./routes/Budget-app";
+import Home from "./routes/Home";
+
 
 function App() {
-  const [totalIncomeAmount, setTotalIncomeAmount] = useState(0);
-  const [totalExpenseAmount, setTotalExpenseAmount] = useState(0);
-  const [totalSavingAmount, setTotalSavingAmount] = useState(0);
-
-  const getTotalIncomeAmount = (totalIncomeAmount: number) => {
-    setTotalIncomeAmount(totalIncomeAmount);
-  };
-
-  const getTotalExpenseAmount = (totalExpenseAmount: number) => {
-    setTotalExpenseAmount(totalExpenseAmount);
-  };
-
-  const getTransferAmount = (totalSavingAmount: number) => {
-    setTotalSavingAmount(totalSavingAmount);
-  };
-
-    const totalBalance = () => {
-      return totalIncomeAmount - totalExpenseAmount - totalSavingAmount;
-    };
-
   return (
-    <div className="App">
-      <Income setTotalIncomeAmount={getTotalIncomeAmount} />
-      <Expense setTotalExpenseAmount={getTotalExpenseAmount} />
-      <Saving savingAmount={totalSavingAmount} />
-      <Balance balance={totalBalance()} transferSaving={getTransferAmount} />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/budget-app" element={<BudgetApp />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-
-export default App;

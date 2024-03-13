@@ -39,7 +39,9 @@ const Balance = (props: BalanceAndTransfer) => {
           <button>Transfer</button>
         </form>
 
-        <h2>Current balance: {props.balance}</h2>
+        <h2>
+          Current balance: <h2 className="balance-amount">{props.balance}</h2>
+        </h2>
       </section>
     </div>
   );

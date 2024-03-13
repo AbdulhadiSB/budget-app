@@ -12,7 +12,7 @@ body {
 
 .app {
   height: 100vh;
-  background-color: aquamarine;
+  /* background-color: aquamarine; */
   display: flex;
   /* justify-content: space-around; */
   /* align-items: center; */
@@ -51,12 +51,14 @@ section {
 /* -------------------------------------------  */
 
 .income form {
+  width: 20rem;
   display: flex;
   flex-direction: column;
   margin: 10px;
 }
 
 .expense form {
+  width: 20rem;
   display: flex;
   flex-direction: column;
   margin: 10px;
@@ -115,6 +117,14 @@ section {
   list-style-type: none;
 }
 
+.income-list {
+  background-color: rgba(0, 162, 255, 0.4);
+  padding: 20px;
+  margin-bottom: 5px;
+  border: 2px solid blue;
+  border-radius: 5rem;
+}
+
 /* -----------------------------------------  */
 
 /* ================= EXPENSE ===================  */
@@ -152,6 +162,14 @@ section {
   list-style-type: none;
 }
 
+.expense-list {
+  background-color: rgba(255, 0, 0, 0.4);
+  padding: 20px;
+  margin-bottom: 5px;
+  border: 2px solid red;
+  border-radius: 5rem;
+}
+
 /* ------------------------------------------  */
 
 /* ================== SAVING =====================  */
@@ -177,6 +195,11 @@ section {
 }
 
 /* ------------------------------------------  */
+
+.balance-amount {
+  display: inline-block;
+  color: red;
+}
 
 input {
   padding: 10px;
