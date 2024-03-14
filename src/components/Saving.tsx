@@ -1,53 +1,59 @@
-import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
-
-
-type SavingProps = {
-  transferAmount: number;
-};
-
+import React, { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 const Saving = (props: { savingAmount: number }) => {
-  const [target, setTarget] = useState(0);
-  // const [saving, setSavings] = useState(0);
-  // const [totalSaving, setTotalSaving] = useState<SavingArray[]>([]);
+  const savingSchema = z.object({
+    target: z.coerce.number().nonnegative("Target must be positive number"),
+  });
 
-  // useEffect(() => {
-  //   setSavings(saving + props.savingAmount);
-  // }, [props.savingAmount]);
+  type SavingZod = z.infer<typeof savingSchema>;
 
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    setTarget(Number(0));
+  const [target, setTarget] = useState<number>(0);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<SavingZod>({ resolver: zodResolver(savingSchema) });
+
+
+
+  const onSubmit: SubmitHandler<SavingZod> = (data: SavingZod) => {
+    setTarget(data.target);
+    reset();
   };
 
-  const handleTarget = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log("target is working");
-    setTarget(Number(event.target.value));
-  };
+ 
 
   const percentageCalculating = () => {
     if (target > props.savingAmount) {
-      return Math.floor((props.savingAmount / target) * 100)  
+      return Math.floor((props.savingAmount / target) * 100);
     } else {
       return 100;
     }
-  }
-
-  // Progress still to be done
+  };
 
   return (
     <div>
       <section className="app_item saving">
-        <form className="form-saving" onSubmit={handleSubmit}>
+        <form className="form-saving" onSubmit={handleSubmit(onSubmit)}>
           <label>Set target</label>
           <input
-            type="number"
-            name="targetSaving"
-            onChange={handleTarget}
-            value={target}
+            type="text"
+            className="form__input"
+            id="target__input"
+            {...register("target")}
           />
-          <button>Reset</button>
+          {errors.target && (
+            <span className="error-msg">{errors.target.message}</span>
+          )}
+
+          <button>Add Target</button>
+
+          <button onClick={() => setTarget(0)}>Reset</button>
 
           <label>Current saving: {props.savingAmount}</label>
 

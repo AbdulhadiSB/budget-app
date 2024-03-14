@@ -4,12 +4,6 @@ import { v4 as uuidv4 } from "uuid";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod"
 
-// type IncomeType = {
-//   id: string;
-//   source: string;
-//   amount: number;
-//   date: string;
-// };
 
 type GetIncome = {
   setTotalIncomeAmount: (totalIncomeAmount: number) => void;
@@ -68,7 +62,6 @@ const Income = (props: GetIncome) => {
             placeholder="Enter the source of income"
             {...register("source")}
             name="source"
-            id="income-source"
           />
           {errors.source && <p> {errors.source.message}</p>}
 

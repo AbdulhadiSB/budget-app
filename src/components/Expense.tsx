@@ -1,17 +1,28 @@
-import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
-type ExpenseType = {
-  id: string;
-  source: string;
-  amount: number;
-  date: string;
-};
 
 type GetExpense = {
   setTotalExpenseAmount: (totalExpenseAmount: number) => void;
 };
+
+const expenseSchema = z.object({
+  id: z.string().optional(),
+  source: z
+    .string()
+    .min(2, { message: "source must have at least 2 characters " }),
+  amount: z.coerce
+    .number()
+    .positive({ message: "amount must be a positive number" }),
+  date: z.coerce.date({
+    required_error: "Please select a date and time",
+  }),
+});
+
+type ExpenseZod = z.infer<typeof expenseSchema>
 
 const Expense = (props: GetExpense) => {
   const {
@@ -19,9 +30,9 @@ const Expense = (props: GetExpense) => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<ExpenseType>();
+  } = useForm<ExpenseZod>({ resolver: zodResolver(expenseSchema) });
 
-  const [expenseArr, setExpenseArr] = useState<ExpenseType[]>([]);
+  const [expenseArr, setExpenseArr] = useState<ExpenseZod[]>([]);
 
   useEffect(() => {
     props.setTotalExpenseAmount(
@@ -29,50 +40,20 @@ const Expense = (props: GetExpense) => {
     );
   }, [expenseArr]);
 
-  const onSubmit: SubmitHandler<ExpenseType> = (data: any) => {
-    const newExpense = {
-      id: uuidv4(),
-      ...data,
-      amount: parseFloat(data.amount),
+  const onSubmit: SubmitHandler<ExpenseZod> = (data: ExpenseZod) => {
+      data.id = uuidv4();
+      setExpenseArr((expenseArr) => [...expenseArr, data])
+
+      // setExpenseArr((prevExpense) => [...prevExpense, newExpense]);
+      reset();
     };
 
-    setExpenseArr((prevExpense) => [...prevExpense, newExpense]);
-    reset();
-  };
-
-  // const handleSubmit = (event: FormEvent) => {
-  //   event.preventDefault();
-  //   console.log(expense);
-  //   const newExpense = {
-  //     id: uuidv4(),
-  //     source: expense.source,
-  //     amount: expense.amount,
-  //     date: expense.date,
-  //   };
-
-  //   setExpenseArr((prevIncomes) => {
-  //     return [...prevIncomes, newExpense];
-  //   });
-
-  //   // reset input feild
-  //   setExpense({
-  //     source: "",
-  //     amount: 0,
-  //     date: "",
-  //   });
-  // };
-
-  //////////////////////////////////////////////////////////////////////
-  // const handleExpense = (event: ChangeEvent<HTMLInputElement>) => {
-  //   setExpense((prevIncome) => {
-  //     return { ...prevIncome, [event.target.name]: event.target.value };
-  //   });
-  // };
-
-  const handleDelete = (id: string) => {
+    const handleDelete = (id: string | undefined) => {
     const filteredExpense = expenseArr.filter((expense) => expense.id !== id);
     setExpenseArr(filteredExpense);
   };
+
+
 
   return (
     <div>
@@ -82,9 +63,8 @@ const Expense = (props: GetExpense) => {
           <input
             type="text"
             placeholder="Enter the source of expense"
-            {...register("source", {
-              required: "Enter the source of expense",
-            })}
+            {...register("source")}
+            name="source"
           />
           {errors.source && <span>{errors.source.message}</span>}
 
@@ -103,7 +83,7 @@ const Expense = (props: GetExpense) => {
           <label>Date of expense</label>
           <input
             type="Date"
-            {...register("date", { required: "Date of income is required" })}
+            {...register("date", { required: "Date of expense is required" })}
           />
           {errors.date && <span>{errors.date.message}</span>}
 
@@ -116,7 +96,7 @@ const Expense = (props: GetExpense) => {
           {expenseArr.map((newExpense) => (
             <div className="expense-list" key={newExpense.id}>
               <li>
-                {newExpense.source}: {newExpense.amount}EUR on {newExpense.date}
+                {newExpense.source}: {newExpense.amount}EUR on {newExpense.date.toDateString()}
               </li>
               <button onClick={() => handleDelete(newExpense.id)}>
                 delete

@@ -1,10 +1,8 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import React, { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
-// type TransferType = {
-//   id: string;
-//   transferAmount: number;
-// };
 
 type BalanceAndTransfer = {
   balance: number;
@@ -15,27 +13,45 @@ const Balance = (props: BalanceAndTransfer) => {
   // const [savingArray, setSavingArray] = useState<TransferType[]>([]);
   const [savingAmount, setSavingAmount] = useState(0);
 
-  const handleTransferSaving = (event: ChangeEvent<HTMLInputElement>) => {
-    setSavingAmount(Number(event.target.value));
-  };
+  const balanceSchema = z.object({
+    transfer: z.coerce
+      .number()
+      .nonnegative("Can't transfer a negative value!")
+      .refine((value) => value > 0, {
+        message: "Transfer amount must be positive",
+      })
+      .refine((value) => value <= props.balance, {
+        message: "Balance after transfer cannot be negative",
+      }),
+  });
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
-    props.transferSaving(savingAmount);
-    setSavingAmount(0);
+  type BalanceZod = z.infer<typeof balanceSchema>;
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<BalanceZod>({ resolver: zodResolver(balanceSchema) });
+
+  const onSubmit: SubmitHandler<BalanceZod> = (data) => {
+    props.transferSaving(data.transfer);
+    setSavingAmount(data.transfer);
+    reset();
   };
 
   return (
     <div>
       <section className="app_item balance">
-        <form className="form-balance" onSubmit={handleSubmit}>
+        <form className="form-balance" onSubmit={handleSubmit(onSubmit)}>
           <label>Transfer to saving account</label>
           <input
-            type="number"
-            name="transferAmount"
-            value={savingAmount}
-            onChange={handleTransferSaving}
+            type="text"
+            className="form__input"
+            id="transfer--input"
+            {...register("transfer")}
           />
+          {errors.transfer && <span>{errors.transfer.message}</span>}
           <button>Transfer</button>
         </form>
 

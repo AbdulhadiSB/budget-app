@@ -5,7 +5,14 @@ const Home = () => {
   const navigate = useNavigate();
   () => navigate("/Budget-app");
 
-  return <button onClick={() => navigate("/Budget-app")}> Home </button>;
+  return (
+    <div className="home">
+      <button className="home-btn" onClick={() => navigate("/Budget-app")}>
+        {" "}
+        Home{" "}
+      </button>
+    </div>
+  );
 };
 
 export default Home;
