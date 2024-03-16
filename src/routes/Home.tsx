@@ -7,9 +7,11 @@ const Home = () => {
 
   return (
     <div className="home">
+      <h1 className="home-title">Smart Money, Smarter Choices</h1>
+      <h2 className="sec-title">Maximize Savings, Minimize Stress!</h2>
+
       <button className="home-btn" onClick={() => navigate("/Budget-app")}>
-        {" "}
-        Home{" "}
+        Start Saving
       </button>
     </div>
   );

@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -5,13 +7,26 @@
 }
 
 body {
+  background-color: antiquewhite;
   margin: 5rem;
 }
 
+.home-title {
+  margin: 15px;
+  font-family: Sansita;
+}
+
+.sec-title {
+  margin: 15px;
+  font-family: Sansita;
+}
+
 .home {
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .home-btn {
@@ -19,7 +34,9 @@ body {
   justify-content: center;
   align-items: center;
   padding: 1rem 5rem;
-  font-size: 18px;
+  font-size: 20px;
+  margin: 15px;
+  font-family: Sansita;
 }
 
 /* -----------------------------------------  */
@@ -211,7 +228,8 @@ section {
 /* ------------------------------------------  */
 
 .balance-amount {
-  display: inline-block;
+  display: block;
+  text-align: center;
   color: red;
 }
 
@@ -249,4 +267,14 @@ p {
   color: red;
   text-align: center;
   font-size: 18px;
+}
+
+.exit-btn {
+  background-color: black;
+  color: aliceblue;
+  top: 5;
+  left: 5;
+  position: absolute;
+  width: 5vw;
+  font-size: 0.8rem;
 }

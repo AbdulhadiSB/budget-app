@@ -1,4 +1,6 @@
 import React, { useState, useCallback } from "react";
+import { useNavigate } from "react-router";
+
 
 
 import "../../public/app.css";
@@ -37,8 +39,15 @@ function BudgetApp() {
     return totalIncomeAmount - totalExpenseAmount - totalSavingAmount;
   };
 
+  const navigate = useNavigate();
+  () => navigate("/Home");
+
+
   return (
     <div className="App">
+      <button className="exit-btn" onClick={() => navigate("/Home")}>
+        Exit
+      </button>
       <Income setTotalIncomeAmount={getTotalIncomeAmount} />
       <Expense setTotalExpenseAmount={getTotalExpenseAmount} />
       <Saving savingAmount={totalSavingAmount} />
